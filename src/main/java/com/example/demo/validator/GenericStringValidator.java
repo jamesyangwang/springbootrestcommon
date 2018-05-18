@@ -38,4 +38,15 @@ public abstract class GenericStringValidator <T extends Annotation> implements C
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 //https://github.com/jamesyangwang/java-bean-validation-extension
