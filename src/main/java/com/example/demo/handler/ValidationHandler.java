@@ -21,22 +21,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.example.demo.model.ErrorDetails;
 
-//https://dzone.com/articles/implementing-validation-for-restful-services-with
 @ControllerAdvice
 public class ValidationHandler extends ResponseEntityExceptionHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(ValidationHandler.class);
-
-	//=========================================================================
-	// handle Exception
-	
-	@ExceptionHandler(ConstraintViolationException.class)
-	public final ResponseEntity<ErrorDetails> handleAllExceptions(ConstraintViolationException ex, WebRequest request) {
-		logger.info("handleAllExceptions() starts...");
-		ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), null,
-				request.getDescription(false));
-		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.BAD_REQUEST);
-	}
 
 	//=========================================================================
 	// triggered by @Valid @RequestBody
@@ -62,6 +50,16 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(details, headers, status);
 	}
 
+	//=========================================================================
+	// handle Exception
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public final ResponseEntity<ErrorDetails> handleAllExceptions(ConstraintViolationException ex, WebRequest request) {
+		logger.info("handleAllExceptions() starts...");
+		ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), null,
+				request.getDescription(false));
+		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.BAD_REQUEST);
+	}
 }
 
 
@@ -94,5 +92,6 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
 
 //ResponseEntityExceptionHandler:
 //https://blog.jayway.com/2013/02/03/improve-your-spring-rest-api-part-iii/
+//https://dzone.com/articles/implementing-validation-for-restful-services-with
 
 
